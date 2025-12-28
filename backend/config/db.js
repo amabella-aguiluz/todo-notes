@@ -21,6 +21,16 @@ const sequelize = new Sequelize(
     }
 );
 
+// convert timezones to iso timezone
+sequelize.options.define = {
+    ...sequelize.options.define,
+    getterMethods: {
+        created_at() { return this.getDataValue('created_at')?.toISOString(); },
+        updated_at() { return this.getDataValue('updated_at')?.toISOString(); }
+    }
+};
+
+
 // async function connectDB() {
 //   try {
 //     await sequelize.authenticate();

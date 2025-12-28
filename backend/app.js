@@ -9,9 +9,9 @@ import cors from 'cors'; // frontend
 dotenv.config();
 const app = express();
 
-app.use(express.json());
-app.use("/api/auth", authRoutes);
-app.use("/api/notes", noteRoutes);
+app.use(express.json()); // connect to express
+app.use("/api/auth", authRoutes); // route to auth functions
+app.use("/api/notes", noteRoutes); // route to note functions
 //frontend
 // app.use(cors({
 //     origin: frontend,

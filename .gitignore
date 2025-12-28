@@ -28,3 +28,4 @@ dist-ssr
 /db  
 /backend/.env
 /frontend/.env
+/backend/test

@@ -1,6 +1,7 @@
 // error handling
 
-export const errorMsg = async () => {
+// default error message
+export const errorMsg = (res, err) => {
      res.status(500).json({error: err.message});
 };
 

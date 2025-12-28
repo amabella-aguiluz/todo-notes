@@ -1,5 +1,6 @@
 import Notes from '../models/notes.model.js';
 
+// create notes
 export const createNoteService = async (userId, title, description) => {
     return Notes.create({userId, title, description});
 };

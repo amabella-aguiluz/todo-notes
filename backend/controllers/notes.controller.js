@@ -2,6 +2,7 @@ import {getUserNoteService, createNoteService, updateNoteService, deleteNoteServ
 import errorMsg from '../utils/error.js'; 
 import Notes from '../models/notes.model.js';
 
+// create note
 export const createNoteController = async (req, res) => {
     const userId = req.userId;
     const {title, description} = req.body;
@@ -11,10 +12,11 @@ export const createNoteController = async (req, res) => {
         console.log(`created note ${note.id}`);
     }
     catch(err) {
-        errorMsg();
+        errorMsg(res, err);
     }
 };
 
+// get user's notes
 export const getUserNoteController = async (req, res) => {
     const userId = req.userId;
     try {
@@ -23,10 +25,11 @@ export const getUserNoteController = async (req, res) => {
         console.log(`got notes ${userId}`);
     }
     catch(err) {
-        errorMsg();
+        errorMsg(res, err);
     }
 };
 
+// update note
 export const updateNoteController = async (req, res) => {
 const {id} = req.params;
     const data = req.body;
@@ -41,10 +44,11 @@ const {id} = req.params;
         console.log(`updated note ${id}`);
     }
     catch(err) {
-        errorMsg();
+        errorMsg(res, err);
     }
 };
 
+// delete note
 export const deleteNoteController = async (req, res) => {
     const {id} = req.params;
     const note = await getNoteByIdService(id);
@@ -58,7 +62,7 @@ export const deleteNoteController = async (req, res) => {
         console.log(`deleted note ${id}`);
     }
     catch(err) {
-        errorMsg();
+        errorMsg(res, err);
     }
 };
 

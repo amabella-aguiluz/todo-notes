@@ -3,10 +3,13 @@ import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
 import sequelize from "./config/db.js";
+import apiLimiter from './middleware/rateLimiter.js';
+
 
 dotenv.config();
 
 app.use(cors());
+app.use('/api/', apiLimiter); // applies to all /api routes
 app.use(express.json());
 
 

@@ -28,13 +28,14 @@ export const loginController = async (req, res) => {
 
     const valid = await bcrypt.compare(password, user.password_hash);
     if (!valid) return res.status(401).json({error: 'Invalid password'});
+    
 
     const token = jwt.sign({userId: user.id}, process.env.JWT_SECRET, {expiresIn: '2h'});
     res.json({token, userId: user.id});
     console.log(`logged into user ${userId}`);
   }
   catch(err) {
-    errorMsg();
+    errorMsg(res, err);
     console.log(`could not log into user ${userId}`);
   }
 };

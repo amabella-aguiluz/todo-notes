@@ -1,7 +1,7 @@
 import User from '../models/user.model.js';
 import bcrypt from 'bcrypt';
 
-// save emial and hash password
+// save email and hash password
 export const createUserService = async (email, password) => {
     if (!email || !password) {
         throw new Error("Email and password are required");
