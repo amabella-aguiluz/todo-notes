@@ -1,28 +1,27 @@
 import Notes from '../models/notes.model.js';
 
-export const createNote = async (userId, title, description) => {
+export const createNoteService = async (userId, title, description) => {
     return Notes.create({userId, title, description});
 };
 
 // get user notes
-export const getUserNote = async(userId) => {
+export const getUserNoteService = async(userId) => {
     return Notes.findAll( {where: {userId} });
 };
 
 // update notes
-export const updateNotes = async(id, data) => {
+export const updateNoteService = async(id, data) => {
     return Notes.update(data, {where: {id} });
 };
 
 //delete notes
-export const deleteNotes = async(id) => {
+export const deleteNoteService = async(id) => {
     return Notes.destroy( {where: {id} } );
 };
 
-export default {
-    createNote,
-    getUserNote,
-    updateNotes,
-    deleteNotes
+//get note by id
+export const getNoteByIdService = async (noteId) => {
+  return await Notes.findOne({ where: { id: noteId } });
 };
 
+export default {getUserNoteService, createNoteService, updateNoteService, deleteNoteService, getNoteByIdService};
