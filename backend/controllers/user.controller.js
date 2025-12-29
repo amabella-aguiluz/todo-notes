@@ -1,4 +1,5 @@
-import {createUserService, getUserEmailService} from '../services/user.service.js';
+import {createUserService, getUserEmailService, generatePasswordResetToken,
+    resetPasswordService} from '../services/user.service.js';
 import errorMsg from '../utils/error.js'; 
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
@@ -8,14 +9,15 @@ dotenv.config();
 
 // register new
 export const registerController = async (req, res) => {
-  const {email, password} = req.body;
+  const {email, password, passwordConfirm} = req.body;
   try {
-    const user = await createUserService(email, password);
+    const user = await createUserService(email, password, passwordConfirm);
+    console.log(`registering...`);
     res.status(201).json({message: 'User successfully registered', userId: user.id});
-    console.log(`created user ${userId}`);
+    console.log(`created user ${user.id}`);
   }
   catch (err) {
-    errorMsg();
+    errorMsg(res, err);
   }
 };
 
@@ -40,6 +42,46 @@ export const loginController = async (req, res) => {
   }
 };
 
+  // forgot password
+// Request password reset
+export const forgotPasswordController = async (req, res) => {
+  const { email } = req.body;
+  if (!email)
+    return res.status(400).json({ error: 'Email required' });
+  try {
+    const user = await getUserEmailService(email);
+    
+    if (!user) return res.status(404).json({ error: "User not found" });
+
+    const token = generatePasswordResetToken(user);
+    // TODO: send token via email
+    res.json({ message: "Reset token generated", token });
+    // TODO: send token via email
+  } catch (err) {
+    errorMsg(res, err);
+  }
+};
+
+// Reset password
+export const resetPasswordController = async (req, res) => {
+  const { token, newPassword } = req.body;
+  if (!token || !newPassword)
+    return res.status(400).json({ error: 'Token and new password required' });
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    if (decoded.purpose !== 'password_reset')
+      return res.status(400).json({ error: 'Invalid reset token' });
+
+    await resetPasswordService(decoded.userId, newPassword);
+
+    res.json({ message: 'Password updated successfully' });
+  } catch (err) {
+    return res.status(400).json({ error: 'Invalid or expired token' });
+  }
+};
+
+
 export default {
-  registerController, loginController
+  registerController, loginController, forgotPasswordController, resetPasswordController
 };

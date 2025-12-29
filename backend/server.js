@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
 import sequelize from "./config/db.js";
-import apiLimiter from './middleware/rateLimiter.js';
+import apiLimiter from './middlewares/rateLimiter.js';
 
 
 dotenv.config();
