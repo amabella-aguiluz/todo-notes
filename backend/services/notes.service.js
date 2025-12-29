@@ -1,4 +1,5 @@
 import Notes from '../models/notes.model.js';
+import {Op} from 'sequelize';
 
 // create notes
 export const createNoteService = async (userId, title, description) => {
@@ -8,6 +9,37 @@ export const createNoteService = async (userId, title, description) => {
 // get user notes
 export const getUserNoteService = async(userId) => {
     return Notes.findAll( {where: {userId} });
+};
+
+// update notes
+export const getNotesService = async (userId, sortBy, order) => {
+  const allowedSortFields = ["title", "createdAt", "updatedAt"];
+  if (!allowedSortFields.includes(sortBy)) {
+    throw new Error("Invalid sort field");
+  }
+
+  return await Notes.findAll({
+    where: { userId },
+    order: [[sortBy, order]],
+  });
+};
+
+// search notes by {query}
+// {query} = word in search bar
+export const searchNotesService = async (userId, query) => {
+  if (!query) {
+    throw new Error("Search query is required");
+  }
+
+  return await Notes.findAll({
+    where: {
+      userId,
+      [Op.or]: [
+        { title: { [Op.like]: `%${query}%` } },
+        { description: { [Op.like]: `%${query}%` } },
+      ],
+    },
+  });
 };
 
 // update notes
@@ -25,4 +57,4 @@ export const getNoteByIdService = async (noteId) => {
   return await Notes.findOne({ where: { id: noteId } });
 };
 
-export default {getUserNoteService, createNoteService, updateNoteService, deleteNoteService, getNoteByIdService};
+export default {getNotesService, searchNotesService, createNoteService, updateNoteService, deleteNoteService, getNoteByIdService};

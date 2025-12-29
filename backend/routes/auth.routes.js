@@ -3,9 +3,9 @@ import {registerController, loginController, forgotPasswordController, resetPass
 
 const router = express.Router();
 
-router.post('/register', registerController);
-router.post('/login', loginController);
-router.post('/forgot-password', forgotPasswordController);
-router.post('/reset-password', resetPasswordController);
+router.post('/register', registerController); // register a new user
+router.post('/login', loginController); // login a user
+router.post('/forgot-password', forgotPasswordController); // create a token to reset your password
+router.post('/reset-password', resetPasswordController); // reset password 
 
 export default router;
