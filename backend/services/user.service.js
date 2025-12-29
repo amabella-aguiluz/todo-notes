@@ -1,13 +1,5 @@
 import User from '../models/user.model.js';
 import bcrypt from 'bcrypt';
-<<<<<<< HEAD
-
-// save email and hash password
-export const createUserService = async (email, password) => {
-    if (!email || !password) {
-        throw new Error("Email and password are required");
-    };
-=======
 import jwt from 'jsonwebtoken';
 
 // save email and hash password
@@ -27,7 +19,6 @@ export const createUserService = async (email, password, passwordConfirm) => {
     if (existingUser) {
         throw new Error("Email already exists");
     }
->>>>>>> backend-dev
 
     const hashedPassword = await bcrypt.hash(password, 10);
     return User.create({ email, password_hash: hashedPassword});
@@ -38,11 +29,6 @@ export const getUserEmailService = async(email) =>{
     return User.findOne({where: {email} });
 };
 
-<<<<<<< HEAD
-export default {
-    createUserService,
-    getUserEmailService
-=======
 
     // forgot password
 // generate a token to reset password
@@ -65,5 +51,4 @@ export default {
     getUserEmailService,
     generatePasswordResetToken,
     resetPasswordService
->>>>>>> backend-dev
 };

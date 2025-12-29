@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import {getUserNoteService, createNoteService, updateNoteService, deleteNoteService, getNoteByIdService} from '../services/notes.service.js';
-=======
 import {searchNotesService, getNotesService, createNoteService, updateNoteService, deleteNoteService, getNoteByIdService} from '../services/notes.service.js';
->>>>>>> backend-dev
 import errorMsg from '../utils/error.js'; 
 import Notes from '../models/notes.model.js';
 
@@ -21,18 +17,6 @@ export const createNoteController = async (req, res) => {
 };
 
 // get user's notes
-<<<<<<< HEAD
-export const getUserNoteController = async (req, res) => {
-    const userId = req.userId;
-    try {
-        const notes = await getUserNoteService(userId);
-        res.json(notes);
-        console.log(`got notes ${userId}`);
-    }
-    catch(err) {
-        errorMsg(res, err);
-    }
-=======
 export const getNotesController = async (req, res) => {
   try {
     const userId = req.userId;
@@ -60,7 +44,6 @@ export const searchNotesController = async (req, res) => {
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
->>>>>>> backend-dev
 };
 
 // update note
@@ -101,9 +84,5 @@ export const deleteNoteController = async (req, res) => {
 };
 
 export default {
-<<<<<<< HEAD
-    createNoteController, getUserNoteController, updateNoteController, deleteNoteController
-=======
     createNoteController, searchNotesController, getNotesController, updateNoteController, deleteNoteController
->>>>>>> backend-dev
 };

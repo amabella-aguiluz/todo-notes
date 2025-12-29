@@ -1,8 +1,5 @@
 import Notes from '../models/notes.model.js';
-<<<<<<< HEAD
-=======
 import {Op} from 'sequelize';
->>>>>>> backend-dev
 
 // create notes
 export const createNoteService = async (userId, title, description) => {
@@ -15,8 +12,6 @@ export const getUserNoteService = async(userId) => {
 };
 
 // update notes
-<<<<<<< HEAD
-=======
 export const getNotesService = async (userId, sortBy, order) => {
   const allowedSortFields = ["title", "createdAt", "updatedAt"];
   if (!allowedSortFields.includes(sortBy)) {
@@ -48,7 +43,6 @@ export const searchNotesService = async (userId, query) => {
 };
 
 // update notes
->>>>>>> backend-dev
 export const updateNoteService = async(id, data) => {
     return Notes.update(data, {where: {id} });
 };
@@ -63,8 +57,4 @@ export const getNoteByIdService = async (noteId) => {
   return await Notes.findOne({ where: { id: noteId } });
 };
 
-<<<<<<< HEAD
-export default {getUserNoteService, createNoteService, updateNoteService, deleteNoteService, getNoteByIdService};
-=======
 export default {getNotesService, searchNotesService, createNoteService, updateNoteService, deleteNoteService, getNoteByIdService};
->>>>>>> backend-dev

@@ -1,9 +1,5 @@
-<<<<<<< HEAD
-import {createUserService, getUserEmailService} from '../services/user.service.js';
-=======
 import {createUserService, getUserEmailService, generatePasswordResetToken,
     resetPasswordService} from '../services/user.service.js';
->>>>>>> backend-dev
 import errorMsg from '../utils/error.js'; 
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
@@ -13,16 +9,6 @@ dotenv.config();
 
 // register new
 export const registerController = async (req, res) => {
-<<<<<<< HEAD
-  const {email, password} = req.body;
-  try {
-    const user = await createUserService(email, password);
-    res.status(201).json({message: 'User successfully registered', userId: user.id});
-    console.log(`created user ${userId}`);
-  }
-  catch (err) {
-    errorMsg();
-=======
   const {email, password, passwordConfirm} = req.body;
   try {
     const user = await createUserService(email, password, passwordConfirm);
@@ -32,7 +18,6 @@ export const registerController = async (req, res) => {
   }
   catch (err) {
     errorMsg(res, err);
->>>>>>> backend-dev
   }
 };
 
@@ -57,10 +42,6 @@ export const loginController = async (req, res) => {
   }
 };
 
-<<<<<<< HEAD
-export default {
-  registerController, loginController
-=======
   // forgot password
 // Request password reset
 export const forgotPasswordController = async (req, res) => {
@@ -103,5 +84,4 @@ export const resetPasswordController = async (req, res) => {
 
 export default {
   registerController, loginController, forgotPasswordController, resetPasswordController
->>>>>>> backend-dev
 };

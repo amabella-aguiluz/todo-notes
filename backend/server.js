@@ -3,11 +3,7 @@ import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
 import sequelize from "./config/db.js";
-<<<<<<< HEAD
-import apiLimiter from './middleware/rateLimiter.js';
-=======
 import apiLimiter from './middlewares/rateLimiter.js';
->>>>>>> backend-dev
 
 
 dotenv.config();
