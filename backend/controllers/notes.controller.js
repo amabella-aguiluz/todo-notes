@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import {getUserNoteService, createNoteService, updateNoteService, deleteNoteService, getNoteByIdService} from '../services/notes.service.js';
+=======
+import {searchNotesService, getNotesService, createNoteService, updateNoteService, deleteNoteService, getNoteByIdService} from '../services/notes.service.js';
+>>>>>>> backend-dev
 import errorMsg from '../utils/error.js'; 
 import Notes from '../models/notes.model.js';
 
@@ -17,6 +21,7 @@ export const createNoteController = async (req, res) => {
 };
 
 // get user's notes
+<<<<<<< HEAD
 export const getUserNoteController = async (req, res) => {
     const userId = req.userId;
     try {
@@ -27,6 +32,35 @@ export const getUserNoteController = async (req, res) => {
     catch(err) {
         errorMsg(res, err);
     }
+=======
+export const getNotesController = async (req, res) => {
+  try {
+    const userId = req.userId;
+
+    // sort by query
+    const sortBy = req.query.sortBy || "updatedAt";
+    const order = req.query.order === "asc" ? "ASC" : "DESC";
+
+    const notes = await getNotesService(userId, sortBy, order);
+    res.json(notes);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
+// search notes by {query}
+// {query} = word in search bar
+export const searchNotesController = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const { query } = req.query;
+
+    const notes = await searchNotesService(userId, query);
+    res.json(notes);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+>>>>>>> backend-dev
 };
 
 // update note
@@ -67,5 +101,9 @@ export const deleteNoteController = async (req, res) => {
 };
 
 export default {
+<<<<<<< HEAD
     createNoteController, getUserNoteController, updateNoteController, deleteNoteController
+=======
+    createNoteController, searchNotesController, getNotesController, updateNoteController, deleteNoteController
+>>>>>>> backend-dev
 };
