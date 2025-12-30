@@ -5,6 +5,7 @@ import "@blocknote/react/style.css";
 import NoteTitleBar from "./components/NoteTitleBar.jsx";
 import NoteBodyEditor from "./components/NotesBodyEditor.jsx";
 import { useNoteEditor } from "../../hooks/noteEditHooks.js";
+import { useLocalTime } from "../../hooks/localTime";
 
 const EditNote = () => {
 // create note editor
@@ -12,7 +13,6 @@ const EditNote = () => {
 
 //   initialize functions
   const { title, setTitle, saveNote, deleteNote } = useNoteEditor(editor);
-
   return (
     <div>
       <NoteTitleBar
@@ -21,6 +21,7 @@ const EditNote = () => {
         onSave={saveNote}
         onDelete={deleteNote}
       />
+      <p>Last modified: {useLocalTime(lastModified)}</p>
       <NoteBodyEditor editor={editor} />
     </div>
   );

@@ -15,8 +15,8 @@ export const useNotePreview = () => {
         // const data = await response.json();
         
         const data = [
-          { id: 1, title: "Note 1", description: "Lorem ipsum" },
-          { id: 2, title: "Note 2", description: "Dolor sit amet" },
+          { id: 1, title: "Note 1", description: "Lorem ipsum", lastModified:"2025-01-10T14:30:00Z" },
+          { id: 2, title: "Note 2", description: "Dolor sit amet", lastModified:"2025-02-15T09:45:00Z" },
         ]; // mock data
         
         setNotes(data);

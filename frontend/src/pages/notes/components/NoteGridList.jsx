@@ -3,6 +3,7 @@ import ActionBar from "./actionBar";
 
 // list of notes
 export const NoteGridList = ({notes, loading}) => {
+    console.log("Notes in grid list:", notes);
     if (loading) return <p>Loading...</p>;
     return(
         <div>
@@ -15,6 +16,7 @@ export const NoteGridList = ({notes, loading}) => {
                     key={note.id}
                     title={note.title}
                     description={note.description}
+                    lastModified={note.lastModified}
                     />
                 ))
                 // if have no notes
