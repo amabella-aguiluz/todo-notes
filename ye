@@ -1,0 +1,39 @@
+[33mcommit 52eb4cc33e9ea4f675c2fa280b6508a14082da16[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: laffingtafy <amabellaaguiluz1@gmail.com>
+Date:   Tue Dec 30 18:17:15 2025 +0800
+
+    Created an (unstyled) frontend for the ff.:
+    - Login page
+    - Register page
+    - Notes edit page
+    - Notes home page
+
+[33mcommit 59f1832b07215c743a692f191e241404b88a2452[m[33m ([m[1;32mfrontend-dev[m[33m)[m
+Author: laffingtafy <amabellaaguiluz1@gmail.com>
+Date:   Mon Dec 29 21:16:18 2025 +0800
+
+    Implemented rate limit
+    Added a README for the backend
+    Wrote documentation for different functions across backend
+    Added a 'forgot password' function on login
+    Registering a new account requires to re-enter password
+    Can sort notes by name, date created/modified, and by ascending/descending order
+    Can search notes by name
+
+[33mcommit 6cfcf04073d562981ead150c4cb36ac10a1f1bde[m
+Author: laffingtafy <amabellaaguiluz1@gmail.com>
+Date:   Mon Dec 29 21:06:00 2025 +0800
+
+    Commit
+
+[33mcommit 5000bc72ca8dbaceda41c653214ab8bba85595c7[m
+Author: laffingtafy <amabellaaguiluz1@gmail.com>
+Date:   Sun Dec 28 18:54:50 2025 +0800
+
+    Configured backend with database
+
+[33mcommit 89c360092cfc812690055c1e8f992493776f6b40[m
+Author: laffingtafy <amabellaaguiluz1@gmail.com>
+Date:   Tue Dec 23 13:33:03 2025 +0800
+
+    Initialized repository
