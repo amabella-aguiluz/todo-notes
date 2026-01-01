@@ -1,5 +1,6 @@
-// src/hooks/getNotesPreview.js
+// src/hooks/useNotesPreview.js
 import { useState, useEffect } from "react";
+import noteSample from "./noteSample";
 
 export const useNotePreview = () => {
   const [notes, setNotes] = useState([]);
@@ -13,12 +14,13 @@ export const useNotePreview = () => {
         // Example API call placeholder
         // const response = await fetch('/api/notes');
         // const data = await response.json();
-        
-        const data = [
-          { id: 1, title: "Note 1", description: "Lorem ipsum", lastModified:"2025-01-10T14:30:00Z" },
-          { id: 2, title: "Note 2", description: "Dolor sit amet", lastModified:"2025-02-15T09:45:00Z" },
-        ]; // mock data
-        
+
+        const sample = await noteSample();
+        const data = sample.map((note) => ({
+          ...note,
+          // parse description JSON for editor or preview
+          description: note.description || [],
+        }));
         setNotes(data);
       } catch (error) {
         console.error("Failed to fetch notes:", error);

@@ -4,12 +4,12 @@ import ActionBar from "./components/actionBar";
 import NotesGridContainer from "./components/NotesGridContainer";
 
 export const noteHome = () => {
-    return(
-    <div>
-        <TopBar />
-        <ActionBar />
-        <NotesGridContainer />
-    </div>
+    return (
+        <div id="#home">
+            <TopBar />
+            <ActionBar />
+            <NotesGridContainer />
+        </div>
     )
 }
 

@@ -12,7 +12,7 @@ export const RegisterInput = () => {
         <TextField label="Password" variant="outlined" />
         <TextField label="Re-enter password" variant="outlined" />
         <Button variant="contained">Register</Button>
-        <p>Already have an account? <Link href="login">Login here</Link> </p>
+        <p>Already have an account? <Link href="#login">Login here</Link> </p>
     </div>
     );
 };

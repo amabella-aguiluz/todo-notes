@@ -1,4 +1,4 @@
-import {searchNotesService, getNotesService, createNoteService, updateNoteService, deleteNoteService, getNoteByIdService} from '../services/notes.service.js';
+import {searchNotesService, readNoteService, getNotesService, createNoteService, updateNoteService, deleteNoteService} from '../services/notes.service.js';
 import errorMsg from '../utils/error.js'; 
 import Notes from '../models/notes.model.js';
 
@@ -31,6 +31,20 @@ export const getNotesController = async (req, res) => {
     res.status(400).json({ error: err.message });
   }
 };
+
+export const readNoteController = async (req, res) => {
+  try {
+    const userId = req.userId;        // from authMiddleware
+    const id = req.params.id;     // from URL
+
+    const note = await readNoteService(id, userId);
+
+    res.status(200).json(note);
+  }
+  catch (err) {
+    res.status(400).json({error: err.message});
+  }
+}
 
 // search notes by {query}
 // {query} = word in search bar

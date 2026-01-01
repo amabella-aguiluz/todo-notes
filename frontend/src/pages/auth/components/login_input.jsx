@@ -10,7 +10,7 @@ export const LoginInput = () => {
         <TextField label="Password" variant="outlined" />
         <Link href="forgot-password">Forgot password?</Link>
         <Button variant="contained">Login</Button>
-        <p>Not a member yet? <Link href="register">Register here</Link></p>
+        <p>Not a member yet? <Link href="#register">Register here</Link></p>
     </div>
     );
 };
