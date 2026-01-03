@@ -1,15 +1,10 @@
 //notegridlist.jsx
 import NotePreview from "./NotePreview";
-import { useNavigate } from "react-router-dom";
 
 
 // list of notes
-export const NoteGridList = ({notes, loading, onOpen}) => {
-    const navigate = useNavigate();
+export const NoteGridList = ({notes, loading, onOpen}) => { 
     if (loading) return <p>Loading...</p>;
-    const openNote = (id) => {
-    navigate(`/notes/${id}`);
-  };
     return(
         <div>
             {/* grid format */}
@@ -22,8 +17,8 @@ export const NoteGridList = ({notes, loading, onOpen}) => {
                     id={note.id}
                     title={note.title}
                     description={note.description}
-                    lastModified={note.lastModified}
-                    lastCreated={note.lastCreated}
+                    updatedAt={note.updatedAt}
+                    createdAt={note.createdAt}
                     onOpen={() => onOpen(note)}
                     />
                 ))

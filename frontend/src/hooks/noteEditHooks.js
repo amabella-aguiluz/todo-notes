@@ -1,15 +1,15 @@
 // src/hooks/noteEditHooks.js
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
-export const useNoteEditor = (editor) => {
+export const useNoteEditor = (editor, noteId) => {
   // change title
   const [title, setTitle] = useState("");
-  const [lastModified, setLastModified] = useState(null);
-  const [lastCreated, setLastCreated] = useState(null);
+  const [updatedAt, setUpdatedAt] = useState(null);
+  const [createdAt, setCreatedAt] = useState(null);
 
-  const setTimestamps = (modified, created) => {
-    setLastModified(modified);
-    setLastCreated(created);
+  const setTimestamps = (updated, created) => {
+    setUpdatedAt(updated);
+    setCreatedAt(created);
   };
 
   const saveNote = () => {
@@ -17,38 +17,42 @@ export const useNoteEditor = (editor) => {
     // save date
     const now = new Date().toISOString();
     // set timestamps in state
-    setLastModified(now);
-    if (!lastCreated) {
-      setLastCreated(now);
+    setUpdatedAt(now);
+    if (!createdAt) {
+      setCreatedAt(now);
     }
 
     // export body to json
-    const bodyJSON = editor.exportJson();
     const noteData = {
       title,
-      body: bodyJSON,
-      lastModified: now,
-      lastCreated: lastCreated ?? now,
+      description: JSON.stringify(editor.exportJson())
     };
     console.log("Saved note:", noteData);
     return noteData;
   };
 
-  const deleteNote = () => {
-    // clear title
-    setTitle("");
-    // clear body
-    if (editor) editor.clearEditor();
-  };
+  const deleteNote = async () => {
+  try {
+    const res = await fetch(`/api/notes/${noteId}`, {
+      method: "DELETE",
+    });
+
+    if (!res.ok) throw new Error("Failed to delete");
+    console.log(`Deleted note ${noteId}`);
+  } catch (err) {
+    console.error(err);
+    alert(`Failed to delete note: ${err.message}`);
+  }
+};
+
 
   return {
     title,
     setTitle,
     saveNote,
     deleteNote,
-    lastModified,
-    lastCreated,
+    updatedAt,
+    createdAt,
     setTimestamps
   };
 }
-

@@ -1,3 +1,4 @@
+//notes.model.js
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/db.js';
 import User from './user.model.js';
@@ -7,10 +8,6 @@ const Notes = sequelize.define('Notes',{
     userId: {type: DataTypes.INTEGER, allowNull: false},
     title: {type: DataTypes.STRING, allowNull: false, defaultValue: 'Untitled'},
     description: {type: DataTypes.TEXT('long'), allowNull:false},
-    },
-    { // defines how timestamps (created_at) and (updated_at) will be saved as
-  timestamps: true,
-  underscored: true,
     }
 );
 

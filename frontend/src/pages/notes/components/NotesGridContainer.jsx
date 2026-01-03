@@ -1,12 +1,12 @@
-// NotesGridContainer.jsx
+//notesgridcontainer.jsx 
 import React from "react";
 import NoteGridList from "./NoteGridList";
 import EditNote from "../EditNote";
-import { useNotePreview } from "../../../hooks/useNotePreview";
+import { useNoteList } from "../../../hooks/useNotePreview";
 import { useOpenNote } from "../../../hooks/openNote";
 
 const NotesGridContainer = () => {
-  const { notes, loading } = useNotePreview();
+  const { notes, loading } = useNoteList(); // now uses your new hook
   const { openNote, open, close } = useOpenNote();
 
   return (

@@ -15,7 +15,7 @@ app.use(express.json());
 
 
 // Sync DB and start server
-sequelize.sync()
+sequelize.sync({ alter: true })
   .then(() => {
     console.log('Database synced successfully');
     const port = process.env.PORT || 3000;

@@ -1,56 +1,50 @@
 // src/pages/notes/EditNote.jsx
-import { useEffect } from "react";
-import { useParams } from "react-router-dom";
 import { useCreateBlockNote } from "@blocknote/react";
 import "@blocknote/react/style.css";
 import NoteTitleBar from "./components/NoteTitleBar.jsx";
 import NoteBodyEditor from "./components/NotesBodyEditor.jsx";
-import { useNoteEditor } from "../../hooks/noteEditHooks.js";
+import { useNoteEditor } from "../../hooks/noteEditHooks";
 import { useLocalTime } from "../../hooks/localTime";
+import { editNoteLoader } from "../../hooks/editNoteLoader";
+import { useNoteSave } from "../../hooks/useNoteSave";
 
-const EditNote = ({ note, onClose }) => {
-
-  // create note editor
+const EditNote = ({ note }) => {
   const editor = useCreateBlockNote();
-  const { title, setTitle, saveNote, deleteNote, lastModified, lastCreated, setTimestamps } = useNoteEditor(editor);
 
-  useEffect(() => {
-  if (!note || !editor) return;
+  const {
+    title,
+    setTitle,
+    saveNote,
+    deleteNote,
+    updatedAt,
+    createdAt,
+    setTimestamps,
+  } = useNoteEditor(editor, noteId);
 
-  setTitle(note.title);
-  setTimestamps(note.lastModified, note.lastCreated);
+  editNoteLoader({
+    noteId: note?.id,
+    editor,
+    setTitle,
+    setTimestamps,
+  });
 
-  if (note.description && note.description.length > 0) {
-      const blocks =
-        typeof note.description === "string"
-          ? JSON.parse(note.description)
-          : note.description;
+  const { onSave, saving } = useNoteSave(note?.id, saveNote);
 
-      editor.replaceBlocks(editor.topLevelBlocks, blocks);
-    }
-  }, [note, editor, setTitle, setTimestamps]);
-
-  // Save handler updates description as JSON string
-  const handleSave = () => {
-    const updatedNote = saveNote();
-    updatedNote.description = JSON.stringify(editor.exportJson()); // save as string for backend
-    console.log("Note ready to save to backend:", updatedNote);
-    // TODO: call your API update here
-  };
 
   return (
-    <div>
-      <div onClick={(e) => e.stopPropagation()}>
+    <div onClick={e => e.stopPropagation()}>
       <NoteTitleBar
         title={title}
         setTitle={setTitle}
-        onSave={saveNote}
+        onSave={onSave}
+        saving={saving}
         onDelete={deleteNote}
       />
-      <p>Last modified: {useLocalTime(lastModified)}</p>
-      <p>Created: {useLocalTime(lastCreated)}</p>
+
+      <p>Last modified: {useLocalTime(updatedAt)}</p>
+      <p>Created: {useLocalTime(createdAt)}</p>
+
       <NoteBodyEditor editor={editor} />
-      </div>
     </div>
   );
 };

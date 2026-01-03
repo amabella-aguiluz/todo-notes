@@ -1,26 +1,19 @@
 // src/hooks/useNotesPreview.js
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import noteSample from "./noteSample";
 
-export const useNotePreview = () => {
+
+export const useNoteList = () => {
   const [notes, setNotes] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // pretend to call getNotes
+    //  call fetchNotes
     const fetchNotes = async () => {
       setLoading(true);
       try {
-        // Example API call placeholder
-        // const response = await fetch('/api/notes');
-        // const data = await response.json();
-
-        const sample = await noteSample();
-        const data = sample.map((note) => ({
-          ...note,
-          // parse description JSON for editor or preview
-          description: note.description || [],
-        }));
+        const res = await fetch('/api/notes');
+        const data = await res.json();
         setNotes(data);
       } catch (error) {
         console.error("Failed to fetch notes:", error);
@@ -34,4 +27,22 @@ export const useNotePreview = () => {
   }, []);
 
   return { notes, loading };
+};
+
+export const useNotePreviewContent = (description) => {
+  return useMemo(() => {
+    if (!description) return null;
+
+    try {
+      const blocks =
+        typeof description === "string"
+          ? JSON.parse(description)
+          : description;
+
+      return blocks?.find(b => b.type === "paragraph") || null;
+    } catch (err) {
+      console.error("Invalid note description JSON:", err);
+      return null;
+    }
+  }, [description]);
 };
