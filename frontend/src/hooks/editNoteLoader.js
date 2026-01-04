@@ -33,6 +33,6 @@ export const editNoteLoader = ({
                     cancelled = true;
                 };
             }, [noteId, editor, setTitle, setTimestamps]);
-        }
-        )
     }
+    )
+}

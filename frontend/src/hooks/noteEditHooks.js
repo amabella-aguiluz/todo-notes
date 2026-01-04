@@ -32,18 +32,18 @@ export const useNoteEditor = (editor, noteId) => {
   };
 
   const deleteNote = async () => {
-  try {
-    const res = await fetch(`/api/notes/${noteId}`, {
-      method: "DELETE",
-    });
+    try {
+      const res = await fetch(`/api/notes/${noteId}`, {
+        method: "DELETE",
+      });
 
-    if (!res.ok) throw new Error("Failed to delete");
-    console.log(`Deleted note ${noteId}`);
-  } catch (err) {
-    console.error(err);
-    alert(`Failed to delete note: ${err.message}`);
-  }
-};
+      if (!res.ok) throw new Error("Failed to delete");
+      console.log(`Deleted note ${noteId}`);
+    } catch (err) {
+      console.error(err);
+      alert(`Failed to delete note: ${err.message}`);
+    }
+  };
 
 
   return {

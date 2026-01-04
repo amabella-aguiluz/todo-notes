@@ -1,0 +1,157 @@
+//approutes.js
+import { Routes, Route, Navigate } from "react-router-dom";
+import AuthRoutes from "./AuthRoutes";
+import NotesRoutes from "./NotesRoutes";
+
+const AppRoutes = () => {
+  return (
+    <Routes>
+      <Route path="/" element={<Navigate to="/login" />} />
+      <Route path="/*" element={<AuthRoutes />} />
+      <Route path="/notes/*" element={<NotesRoutes />} />
+    </Routes>
+  );
+};
+
+export default AppRoutes;
+
+//noteroutes.js
+import { Routes, Route } from "react-router-dom";
+import NotesPreview from "../../pages/notes/NotesPreview";
+import EditNote from "../../pages/notes/EditNote";
+import NoteHome from "../pages/notes/noteHome";
+
+export const NoteRoutes = () => {
+  return (
+    <Routes>
+      <Route index element={<NotesPreview />} />
+      <Route path="noteHome" element={<NoteHome />} />
+      <Route path="new" element={<EditNote />} />
+      <Route path=":noteId" element={<EditNote />} />
+    </Routes>
+  );
+};
+
+//userroutes.js
+import { Routes, Route } from "react-router-dom";
+import LoginPage from "../pages/auth/login";
+import RegisterPage from "../pages/auth/register";
+
+const AuthRoutes = () => {
+  return (
+    <Routes>
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/register" element={<RegisterPage />} />
+    </Routes>
+  );
+};
+
+export default AuthRoutes;
+
+// NOTES
+//notehome.jsx
+import TopBar from "./components/topbar";
+import ActionBar from "./components/actionBar";
+import NotesGridContainer from "./components/NotesGridContainer";
+
+export const NoteHome = () => {
+    return (
+        <div id="#noteHome">
+            <TopBar />
+            <ActionBar />
+            <NotesGridContainer />
+        </div>
+    )
+}
+
+export default NoteHome;
+
+//topbar.jsx
+import Link from "@mui/material/Link";
+
+// app name + log out button
+export const TopBar = () => {
+    return(
+        <div>
+        <h1>Find Your Pages</h1>
+        {/* TODO: aesthetically pleasing log out button */}
+        <Link href="#login">Log Out</Link>      
+        </div>  
+    );
+};
+
+export default TopBar;
+
+//actionbar.jsx
+import NoteActions from "./noteActions";
+import SearchBar from "./searchbar";
+
+export const ActionBar = () => {
+    return(
+        <div>
+            <SearchBar />
+            <NoteActions />
+        </div>
+    )
+}
+
+export default ActionBar;
+
+//notesgridcontainer.jsx 
+import React from "react";
+import NoteGridList from "./NoteGridList";
+import EditNote from "../EditNote";
+import { useNoteList } from "../../../hooks/useNotePreview";
+import { useOpenNote } from "../../../hooks/openNote";
+
+const NotesGridContainer = () => {
+  const { notes, loading } = useNoteList(); // now uses your new hook
+  const { openNote, open, close } = useOpenNote();
+
+  return (
+    <div>
+      <NoteGridList
+        notes={notes}
+        loading={loading}
+        onOpen={open} // pass the open function to each note
+      />
+
+      {openNote && (
+        <div onClick={close}>
+          <div onClick={(e) => e.stopPropagation()}>
+            <EditNote note={openNote} />
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default NotesGridContainer;
+
+
+//AUTH / USER
+//login.jsx
+import LoginInput from "./components/login_input";
+import AuthPage from "./components/auth_page";
+
+export const LoginPage = () => {
+    return (
+    <AuthPage id="#login" type="Login" typeInput={<LoginInput />} />
+    );
+} ;
+
+export default LoginPage;
+
+//register.jsx
+//MEANT TO BE THE LANDING PAGE
+import RegisterInput from "./components/register_input";
+import AuthPage from "./components/auth_page";
+
+export const RegisterPage = () => {
+    return (
+    <AuthPage id="#register" type="Register" typeInput={<RegisterInput />} />
+    );
+} ;
+
+export default RegisterPage;

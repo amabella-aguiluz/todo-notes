@@ -3,7 +3,7 @@ import AuthPage from "./components/auth_page";
 
 export const RegisterPage = () => {
     return (
-    <AuthPage id="#register" type="Register" typeInput={<RegisterInput />} />
+    <AuthPage type="Register" typeInput={<RegisterInput />} />
     );
 } ;
 

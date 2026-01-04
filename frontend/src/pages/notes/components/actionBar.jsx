@@ -1,3 +1,4 @@
+//actionbar.jsx
 import NoteActions from "./noteActions";
 import SearchBar from "./searchbar";
 

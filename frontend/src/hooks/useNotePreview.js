@@ -2,23 +2,30 @@
 import { useState, useEffect, useMemo } from "react";
 import noteSample from "./noteSample";
 
-
+// use list of notes
 export const useNoteList = () => {
   const [notes, setNotes] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     //  call fetchNotes
+    // set page as loading
+    // fetch notes api
+    // update json update of result
     const fetchNotes = async () => {
       setLoading(true);
       try {
         const res = await fetch('/api/notes');
         const data = await res.json();
         setNotes(data);
-      } catch (error) {
+      }
+      // failed error
+      catch (error) {
         console.error("Failed to fetch notes:", error);
         setNotes([]);
-      } finally {
+      }
+      // exit loading state
+      finally {
         setLoading(false);
       }
     };
@@ -29,6 +36,7 @@ export const useNoteList = () => {
   return { notes, loading };
 };
 
+// preview content of note
 export const useNotePreviewContent = (description) => {
   return useMemo(() => {
     if (!description) return null;
