@@ -1,6 +1,6 @@
 //notespreview.jsx
-import { useLocalTime } from "../../../hooks/localTime";
-import { useNotePreviewContent } from "../../../hooks/useNotePreview";
+import { useLocalTime } from "../../../hooks/notes/localTime";
+import { useNotePreviewContent } from "../../../hooks/notes/useNotePreview";
 
 // the preview of a note
 // TODO:

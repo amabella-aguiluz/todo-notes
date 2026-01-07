@@ -1,5 +1,6 @@
 //hooks/useNoteSave.js
 import { useState } from "react";
+import { authFetch } from "../auth/authFetch";
 
 export const useNoteSave = (noteId, saveNote) => {
   const [saving, setSaving] = useState(false);
@@ -9,38 +10,28 @@ export const useNoteSave = (noteId, saveNote) => {
     if (!updated) return;
 
     setSaving(true);
-
     try {
-      // fetch note id
-      // put {new id content} into json
-      // update json string
-      const res = await fetch(`/api/notes/${noteId}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        description: JSON.stringify(updated),
-      });
+      const res = await authFetch(
+        noteId ? `/api/notes/${noteId}` : "/api/notes",
+        {
+          method: noteId ? "PUT" : "POST",
+          body: JSON.stringify(updated),
+        }
+      );
 
-      //error
       if (!res.ok) {
         const errorData = await res.json();
         throw new Error(errorData.error || "Failed to save note");
       }
 
-      // save updated json
       const data = await res.json();
-      console.log("Saved:", data.updatedNote);
-
-      return data.updatedNote;
-    }
-
-    // error catch
-    catch (err) {
+      console.log("Saved note:", data);
+      return data;
+    } catch (err) {
       console.error("Save failed:", err.message);
       alert(`Failed to save note: ${err.message}`);
       return null;
-    }
-    // end saving state
-    finally {
+    } finally {
       setSaving(false);
     }
   };

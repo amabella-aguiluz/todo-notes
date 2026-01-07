@@ -1,40 +1,32 @@
-// src/hooks/useNotesPreview.js
+// src/hooks/notes/useNotesPreview.js
 import { useState, useEffect, useMemo } from "react";
-import noteSample from "./noteSample";
+import { authFetch } from "../auth/authFetch";
 
-// use list of notes
 export const useNoteList = () => {
   const [notes, setNotes] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    //  call fetchNotes
-    // set page as loading
-    // fetch notes api
-    // update json update of result
     const fetchNotes = async () => {
       setLoading(true);
       try {
-        const res = await fetch('/api/notes');
+        const res = await authFetch("/api/notes");
         const data = await res.json();
         setNotes(data);
-      }
-      // failed error
-      catch (error) {
-        console.error("Failed to fetch notes:", error);
+      } catch (err) {
+        console.error("Failed to fetch notes:", err.message);
         setNotes([]);
-      }
-      // exit loading state
-      finally {
+      } finally {
         setLoading(false);
       }
     };
-
     fetchNotes();
   }, []);
 
   return { notes, loading };
 };
+
+
 
 // preview content of note
 export const useNotePreviewContent = (description) => {

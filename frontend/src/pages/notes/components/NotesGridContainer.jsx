@@ -2,8 +2,8 @@
 import React from "react";
 import NoteGridList from "./NoteGridList";
 import EditNote from "../EditNote";
-import { useNoteList } from "../../../hooks/useNotePreview";
-import { useOpenNote } from "../../../hooks/openNote";
+import { useNoteList } from "../../../hooks/notes/useNotePreview";
+import { useOpenNote } from "../../../hooks/notes/openNote";
 
 const NotesGridContainer = () => {
   const { notes, loading } = useNoteList(); // now uses your new hook

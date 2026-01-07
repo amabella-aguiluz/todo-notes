@@ -3,14 +3,14 @@ import { Routes, Route } from "react-router-dom";
 import NotePreview from "../pages/notes/components/NotePreview";
 import EditNote from "../pages/notes/EditNote";
 import NoteHome from "../pages/notes/noteHome";
+import ProtectedRoute from "./protectedRoutes";
 
 export const NoteRoutes = () => {
   return (
     <Routes>
-      <Route index element={<NotePreview />} />
-      <Route path="noteHome" element={<NoteHome />} />
-      <Route path="new" element={<EditNote />} />
-      <Route path=":noteId" element={<EditNote />} />
+    <Route index element={<NoteHome />} />          {/* default /notes */}
+    <Route path="new" element={<EditNote />} />     {/* /notes/new */}
+    <Route path=":noteId" element={<EditNote />} /> {/* /notes/123 */}
     </Routes>
   );
 };

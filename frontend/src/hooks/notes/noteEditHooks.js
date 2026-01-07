@@ -1,5 +1,6 @@
 // src/hooks/noteEditHooks.js
 import { useState } from "react";
+import { authFetch } from "../auth/authFetch";
 
 export const useNoteEditor = (editor, noteId) => {
   // change title
@@ -12,7 +13,7 @@ export const useNoteEditor = (editor, noteId) => {
     setCreatedAt(created);
   };
 
-  const saveNote = () => {
+  const saveNote = async () => {
     if (!editor) return;
     // save date
     const now = new Date().toISOString();
@@ -21,19 +22,34 @@ export const useNoteEditor = (editor, noteId) => {
     if (!createdAt) {
       setCreatedAt(now);
     }
-
     // export body to json
     const noteData = {
       title,
       description: JSON.stringify(editor.exportJson())
     };
-    console.log("Saved note:", noteData);
-    return noteData;
+    try {
+      const res = await authFetch(
+        noteId ? `/api/notes/${noteId}` : "/api/notes",
+        {
+          method: noteId ? "PUT" : "POST",
+          body: JSON.stringify(noteData),
+        }
+      );
+
+      if (!res.ok) {
+        throw new Error("Failed to save note");
+      }
+      const savedNote = await res.json();
+    }
+    catch(err) {
+      console.error("Save failed: ", err.message);
+      alert(err.message);
+    }
   };
 
   const deleteNote = async () => {
     try {
-      const res = await fetch(`/api/notes/${noteId}`, {
+      const res = await authFetch(`/api/notes/${noteId}`, {
         method: "DELETE",
       });
 
@@ -56,3 +72,5 @@ export const useNoteEditor = (editor, noteId) => {
     setTimestamps
   };
 }
+
+export default useNoteEditor;

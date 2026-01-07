@@ -3,10 +3,10 @@ import { useCreateBlockNote } from "@blocknote/react";
 import "@blocknote/react/style.css";
 import NoteTitleBar from "./components/NoteTitleBar.jsx";
 import NoteBodyEditor from "./components/NotesBodyEditor.jsx";
-import { useNoteEditor } from "../../hooks/noteEditHooks";
-import { useLocalTime } from "../../hooks/localTime";
-import { editNoteLoader } from "../../hooks/editNoteLoader";
-import { useNoteSave } from "../../hooks/useNoteSave";
+import { useNoteEditor } from "../../hooks/notes/noteEditHooks.js";
+import { useLocalTime } from "../../hooks/notes/localTime.js";
+import { useEditNoteLoader } from "../../hooks/notes/editNoteLoader.js";
+import { useNoteSave } from "../../hooks/notes/useNoteSave.js";
 
 const EditNote = ({ note }) => {
   const editor = useCreateBlockNote();
@@ -21,7 +21,7 @@ const EditNote = ({ note }) => {
     setTimestamps,
   } = useNoteEditor(editor, noteId);
 
-  editNoteLoader({
+  useEditNoteLoader({
     noteId: note?.id,
     editor,
     setTitle,
