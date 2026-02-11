@@ -1,20 +1,24 @@
 import {
     createUserService, getUserEmailService, generatePasswordResetToken,
     resetPasswordService
-} from '../services/user.service.js';
+} from '../services/user.service';
 import jwt from 'jsonwebtoken';
-import {JwtPayload} from 'jsonwebtoken';
+import { JwtPayload } from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import dotenv from "dotenv";
-import { AuthRequest } from "../middlewares/auth";
 import { Response } from 'express';
 
 dotenv.config();
 
 // register new
-export const registerController = async (req: AuthRequest, res: Response) => {
+export const registerController = async (req: Request, res: Response) => {
     try {
-        const { email, password, passwordConfirm } = req.body;
+        const { email, password, passwordConfirm } = req.body as unknown as
+            {
+                email: string,
+                password: string,
+                passwordConfirm: string
+            };
         const user = await createUserService(email, password, passwordConfirm);
 
         console.log(`registering...`);
@@ -27,9 +31,13 @@ export const registerController = async (req: AuthRequest, res: Response) => {
 };
 
 // login to account
-export const loginController = async (req: AuthRequest, res: Response) => {
+export const loginController = async (req: Request, res: Response) => {
     try {
-        const { email, password } = req.body;
+        const { email, password } = req.body as unknown as
+            {
+                email: string,
+                password: string
+            };
         const user = await getUserEmailService(email);
         if (!user) return res.status(404).json({ error: 'User not found' });
 
@@ -50,9 +58,10 @@ export const loginController = async (req: AuthRequest, res: Response) => {
 
 // forgot password
 // Request password reset
-export const forgotPasswordController = async (req: AuthRequest, res: Response) => {
+export const forgotPasswordController = async (req: Request, res: Response) => {
     try {
-        const { email } = req.body;
+        const { email } = req.body as unknown as
+            { email: string };
         if (!email)
             return res.status(400).json({ error: 'Email required' });
 
@@ -70,9 +79,13 @@ export const forgotPasswordController = async (req: AuthRequest, res: Response) 
 };
 
 // Reset password
-export const resetPasswordController = async (req: AuthRequest, res: Response) => {
+export const resetPasswordController = async (req: Request, res: Response) => {
     try {
-        const { token, newPassword } = req.body;
+        const { token, newPassword } = req.body as unknown as
+            {
+                token: string,
+                newPassword: string
+            };
         if (!token || !newPassword)
             return res.status(400).json({ error: 'Token and new password required' });
 

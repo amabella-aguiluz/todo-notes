@@ -1,5 +1,5 @@
 import { Prisma, PrismaClient } from '@prisma/client';
-import { prisma } from '../config/db';
+import prisma from '../config/prisma.config';
 import { sortBy } from '../types/sortBy';
 
 // create notes

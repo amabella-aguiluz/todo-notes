@@ -6,10 +6,10 @@ import { toNumber } from "../util/toNumber";
 
 
 // create note
-export const createNoteController = async (req: AuthRequest, res: Response) => {
+export const createNoteController = async (req: Request, res: Response) => {
 
   try {
-    const user_id = req.user_id;
+    const user_id =  (req as AuthRequest).user_id;
     const { title, description } = req.body;
     const note = await createNoteService(user_id, title, description);
     res.status(201).json(note);
@@ -21,7 +21,7 @@ export const createNoteController = async (req: AuthRequest, res: Response) => {
 };
 
 // get user's notes
-export const getNotesController = async (req: AuthRequest, res: Response) => {
+export const getNotesController = async (req: Request, res: Response) => {
   try {
     const rawSortBy = req.query.sortBy;
     const rawOrder = req.query.order;
@@ -36,7 +36,7 @@ export const getNotesController = async (req: AuthRequest, res: Response) => {
     const ord: orderBy =
       rawOrder === "asc" ? "asc" : "desc";
 
-    const notes = await getNotesService(req.user_id, sort, ord);
+    const notes = await getNotesService((req as AuthRequest).user_id, sort, ord);
     res.json(notes);
   } catch (err: unknown) {
     res.status(500).json({ error: (err as Error).message });
@@ -45,9 +45,9 @@ export const getNotesController = async (req: AuthRequest, res: Response) => {
 
 // search notes by {query}
 // {query} = word in search bar
-export const searchNotesController = async (req: AuthRequest, res: Response) => {
+export const searchNotesController = async (req: Request, res: Response) => {
   try {
-    const user_id = req.user_id;
+    const user_id = (req as AuthRequest).user_id;
     const { query } = req.query;
     if (typeof query !== 'string') return res.status(400).json({ error: "Query must be a string" });
     if (!query) return res.status(400).json({ error: "Query is required" });
@@ -60,13 +60,14 @@ export const searchNotesController = async (req: AuthRequest, res: Response) => 
 };
 
 // update note
-export const updateNoteController = async (req: AuthRequest, res: Response) => {
+export const updateNoteController = async (req: Request, res: Response) => {
   try {
     const note_id = toNumber(req.params.note_id);
     const data = req.body;
-    const note = await getNoteByIdService(req.user_id, note_id);
+    const user_id = (req as AuthRequest).user_id;
+    const note = await getNoteByIdService(user_id, note_id);
     if (!note) return res.status(404).json({ error: 'Note not found' });
-    if (note.user_id !== req.user_id) return res.status(403).json({ error: 'Unauthorized' });
+    if (note.user_id !== user_id) return res.status(403).json({ error: 'Unauthorized' });
 
     await updateNoteService(note_id, data);
     res.json({ message: "Note updated" });
@@ -78,14 +79,15 @@ export const updateNoteController = async (req: AuthRequest, res: Response) => {
 };
 
 // delete note
-export const deleteNoteController = async (req: AuthRequest, res: Response) => {
+export const deleteNoteController = async (req: Request, res: Response) => {
   try {
     const note_id = toNumber(req.params.note_id);
-    const note = await getNoteByIdService(req.user_id, note_id);
+    const user_id = (req as AuthRequest).user_id
+    const note = await getNoteByIdService(user_id, note_id);
     if (!note) return res.status(404).json({ error: "Note not found" });
-    if (note.user_id !== req.user_id) return res.status(403).json({ error: "Unauthorized" });
+    if (note.user_id !== user_id) return res.status(403).json({ error: "Unauthorized" });
 
-    await deleteNoteService(req.user_id, note_id);
+    await deleteNoteService(user_id, note_id);
     res.json({ message: "Note deleted" });
     console.log(`Deleted note ${note_id}`);
   } catch (err: unknown) {
