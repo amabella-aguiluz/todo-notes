@@ -1,0 +1,9 @@
+DATABASE_URL=mysql://avnadmin:AVNS_-knYcCEE-xGzsrhZ2Z3@notes-app-amabellaaguiluz1-aa85.k.aivencloud.com:11541/defaultdb
+
+DB_NAME=defaultdb
+DB_HOST=notes-app-amabellaaguiluz1-aa85.k.aivencloud.com
+DB_USER=avnadmin
+DB_PASSWORD=AVNS_-knYcCEE-xGzsrhZ2Z3
+DB_PORT=11541
+
+JWT_SECRET=2764a97010069463305e7e7f5a0334cd
