@@ -4,7 +4,6 @@ import InputAdornment from "@mui/material/InputAdornment";
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import MenuList from "@mui/material/MenuList";
 import MenuItem from "@mui/material/MenuItem";
-
 // to search for notes by name
 export const SearchBar = () => {
     return(
