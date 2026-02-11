@@ -4,8 +4,8 @@ import AddIcon from '@mui/icons-material/Add';
 export const NoteActions = () => {
     return(
         <div>
-            {/* calls api to create a note  */}
-            <AddIcon />
+            
+            <AddIcon /> {/* calls api to create a note  */}
         </div>
     )
 }
