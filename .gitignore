@@ -26,7 +26,7 @@ dist-ssr
 *.sln
 *.sw?
 /db  
-/backend-js/.env
+/backend-js/
 /backend-ts/.env
 /frontend/.env
 /backend/test.env

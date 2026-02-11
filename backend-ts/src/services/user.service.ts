@@ -1,6 +1,5 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-// import { User, Prisma } from "@prisma/client";
 import { prisma } from '../config/db';
 
 
@@ -27,14 +26,14 @@ export const createUserService = async (
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    return prisma.user.create({
-        data: {email, password_hash: hashedPassword}
+    return prisma.users.create({
+        data: {email, password: hashedPassword}
     });
 };
 
 // find if user email already exists
 export const getUserEmailService = async(email:string) =>{
-    return prisma.user.findUnique({where: {email} });
+    return prisma.users.findUnique({where: {email} });
 };
 
 
@@ -52,7 +51,7 @@ export const resetPasswordService = async (
     user_id: number,
     newPassword: string) => {
   const hashedPassword = await bcrypt.hash(newPassword, 10);
-  return await prisma.user.update({ 
+  return await prisma.users.update({ 
     where: { user_id },
     data: {password: hashedPassword},
       });

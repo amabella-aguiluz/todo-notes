@@ -2,11 +2,8 @@ import TextField from "@mui/material/TextField";
 import SearchIcon from '@mui/icons-material/Search';
 import InputAdornment from "@mui/material/InputAdornment";
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
-<<<<<<< HEAD
 import MenuList from "@mui/material/MenuList";
 import MenuItem from "@mui/material/MenuItem";
-=======
->>>>>>> cdb86681a9bb5db887d564e1f6f62e3b068c8889
 
 // to search for notes by name
 export const SearchBar = () => {
