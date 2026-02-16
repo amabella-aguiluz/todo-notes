@@ -2,6 +2,9 @@ import express from "express";
 import path from "path";
 import cors, { CorsOptions } from "cors";
 import env from "./config/env";
+
+import authRoutes from "./routes/auth.routes";
+import noteRoutes from "./routes/notes.routes"; // adjust filename/path if needed
 // import routes from "./routes";
 
 const app = express();
@@ -18,6 +21,11 @@ const corsOptions: CorsOptions = {
   ],
   credentials: false,
 };
+
+// ✅ This is critical to parse JSON bodies
+app.use(express.json()); // connect to express
+app.use("/api/auth", authRoutes); // route to auth functions
+app.use("/api/notes", noteRoutes); // route to note functions
 
 app.use(cors(corsOptions));
 // app.use("/api/v1", routes);

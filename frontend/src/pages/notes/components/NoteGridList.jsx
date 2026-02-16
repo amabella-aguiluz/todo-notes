@@ -1,9 +1,9 @@
+//notegridlist.jsx
 import NotePreview from "./NotePreview";
-import ActionBar from "./actionBar";
+
 
 // list of notes
-export const NoteGridList = ({notes, loading}) => {
-    console.log("Notes in grid list:", notes);
+export const NoteGridList = ({notes, loading, onOpen}) => { 
     if (loading) return <p>Loading...</p>;
     return(
         <div>
@@ -14,9 +14,12 @@ export const NoteGridList = ({notes, loading}) => {
                 notes.map((note) => (
                     <NotePreview
                     key={note.id}
+                    id={note.id}
                     title={note.title}
                     description={note.description}
-                    lastModified={note.lastModified}
+                    updatedAt={note.updatedAt}
+                    createdAt={note.createdAt}
+                    onOpen={() => onOpen(note)}
                     />
                 ))
                 // if have no notes

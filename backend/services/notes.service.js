@@ -1,17 +1,37 @@
+//notes.service.js
 import Notes from '../models/notes.model.js';
-import {Op} from 'sequelize';
+import { Op } from 'sequelize';
 
 // create notes
 export const createNoteService = async (userId, title, description) => {
-    return Notes.create({userId, title, description});
+  const storedDescription =
+    Array.isArray(description) ? JSON.stringify(description) : description;
+
+  return Notes.create({
+    userId,
+    title,
+    description: storedDescription,
+  });
 };
+
 
 // get user notes
-export const getUserNoteService = async(userId) => {
-    return Notes.findAll( {where: {userId} });
+export const getUserNoteService = async (userId) => {
+  return Notes.findAll({ where: { userId } });
 };
 
-// update notes
+//get singular note
+export const readNoteService = async (id, userId) => {
+  const note = await Notes.findOne({
+    where: { id, userId },
+  });
+  if (!note) {
+    throw new Error('Note not found.');
+  }
+  return note;
+}
+
+// sort notes by criteria
 export const getNotesService = async (userId, sortBy, order) => {
   const allowedSortFields = ["title", "createdAt", "updatedAt"];
   if (!allowedSortFields.includes(sortBy)) {
@@ -43,18 +63,44 @@ export const searchNotesService = async (userId, query) => {
 };
 
 // update notes
-export const updateNoteService = async(id, data) => {
-    return Notes.update(data, {where: {id} });
+export const updateNoteService = async (id, userId, data) => {
+  try {
+    const updateData = { ...data };
+
+    // Ensure description is stored as string
+    if (Array.isArray(data.description)) {
+      updateData.description = JSON.stringify(data.description);
+    }
+
+    const [rowsUpdated] = await Notes.update(updateData, {
+      where: { id, userId },
+    });
+
+    if (rowsUpdated === 0) {
+      throw new Error("No note found or unauthorized");
+    }
+
+    const updatedNote = await Notes.findOne({ where: { id, userId } });
+
+    return {
+      ...updatedNote.dataValues,
+      description:
+        typeof updatedNote.description === "string"
+          ? (() => {
+      try { return JSON.parse(updatedNote.description); }
+      catch { return updatedNote.description; }
+    })()
+  : updatedNote.description,
+    };
+  } catch (err) {
+    console.error("Failed to update note:", err);
+    throw err;
+  }
 };
 
-//delete notes
-export const deleteNoteService = async(id) => {
-    return Notes.destroy( {where: {id} } );
+export const deleteNoteService = async (id, userId) => {
+  return Notes.destroy({ where: { id, userId } });
 };
 
-//get note by id
-export const getNoteByIdService = async (noteId) => {
-  return await Notes.findOne({ where: { id: noteId } });
-};
 
-export default {getNotesService, searchNotesService, createNoteService, updateNoteService, deleteNoteService, getNoteByIdService};
+export default { getNotesService, readNoteService, searchNotesService, createNoteService, updateNoteService, deleteNoteService, };

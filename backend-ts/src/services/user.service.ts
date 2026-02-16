@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { prisma } from '../config/db';
+import prisma from '../config/prisma.config';
 
 
 
@@ -27,34 +27,34 @@ export const createUserService = async (
 
     const hashedPassword = await bcrypt.hash(password, 10);
     return prisma.users.create({
-        data: {email, password: hashedPassword}
+        data: { email, password: hashedPassword }
     });
 };
 
 // find if user email already exists
-export const getUserEmailService = async(email:string) =>{
-    return prisma.users.findUnique({where: {email} });
+export const getUserEmailService = async (email: string) => {
+    return prisma.users.findUnique({ where: { email } });
 };
 
 
-    // forgot password
+// forgot password
 // generate a token to reset password
 export const generatePasswordResetToken = (user_id: number) => {
-  // Token expires in 15 mins
-  return jwt.sign({ user_id, purpose: 'password_reset'},
-     process.env.JWT_SECRET as string,
-      { expiresIn: '15m' });
+    // Token expires in 15 mins
+    return jwt.sign({ user_id, purpose: 'password_reset' },
+        process.env.JWT_SECRET as string,
+        { expiresIn: '15m' });
 };
 
 // validated password reset
 export const resetPasswordService = async (
     user_id: number,
     newPassword: string) => {
-  const hashedPassword = await bcrypt.hash(newPassword, 10);
-  return await prisma.users.update({ 
-    where: { user_id },
-    data: {password: hashedPassword},
-      });
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    return await prisma.users.update({
+        where: { user_id },
+        data: { password: hashedPassword },
+    });
 };
 
 

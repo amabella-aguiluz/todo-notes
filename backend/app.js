@@ -9,14 +9,19 @@ import cors from 'cors'; // frontend
 dotenv.config();
 const app = express();
 
-app.use(express.json()); // connect to express
-app.use("/api/auth", authRoutes); // route to auth functions
-app.use("/api/notes", noteRoutes); // route to note functions
-//frontend
-// app.use(cors({
-//     origin: frontend,
-//     credentials:true 
-// }));
+// Enable JSON body parsing
+app.use(express.json());
+
+// Enable CORS for your frontend (Vite dev server)
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+
+// **Mount your auth routes at /api**
+app.use("/api", authRoutes);
+
+// Start server
+app.listen(3000, () => {
+  console.log("Backend running on http://localhost:3000");
+});
 
 
 export default app;

@@ -21,7 +21,11 @@ model notes {
 model users {
   user_id    Int       @id @default(autoincrement())
   email      String?   @unique(map: "email") @db.VarChar(60)
+<<<<<<< HEAD
   password   String?   @db.VarChar(30)
+=======
+  password String? @db.VarChar(255)
+>>>>>>> d23a76f55ae530477bcd5025d0600cab91740e4e
   created_at DateTime? @db.Timestamp(0)
   updated_at DateTime? @db.Timestamp(0)
   notes      notes[]
