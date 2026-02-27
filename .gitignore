@@ -33,9 +33,6 @@ dist-ssr
 /backend-ts/.env
 /frontend/.env
 /backend/test.env
-<<<<<<< HEAD
-=======
-/backend/.env
-/backend/
-backend-js/.env
->>>>>>> d23a76f55ae530477bcd5025d0600cab91740e4e
+/backend-ts-2/.env
+
+/backend-ts/.dist/
