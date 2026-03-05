@@ -1,48 +1,38 @@
 // src/pages/notes/EditNote.jsx
-import { useCreateBlockNote } from "@blocknote/react";
-import "@blocknote/react/style.css";
-import NoteTitleBar from "./components/NoteTitleBar.jsx";
-import NoteBodyEditor from "./components/NotesBodyEditor.jsx";
-import { useNoteEditor } from "../../hooks/notes/noteEditHooks.js";
+import {NoteTitleBar, NoteBodyEditor} from "./components/NoteTitleBar.jsx";
 import { useLocalTime } from "../../util/localTime.js";
-import { useEditNoteLoader } from "../../hooks/notes/editNoteLoader.js";
-import { useNoteSave } from "../../hooks/notes/useNoteSave.js";
+import { useNote } from "../../hooks/notes/useNote.js";
+import { useEditor } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
+
 
 const EditNote = ({ note }) => {
-  const editor = useCreateBlockNote();
+const editor = useEditor({
+    extensions: [StarterKit],
+    content: '', 
+  });
 
   const {
     title,
     setTitle,
     saveNote,
     deleteNote,
-    updatedAt,
-    createdAt,
+    updated_at,
+    created_at,
     setTimestamps,
-  } = useNoteEditor(editor, noteId);
-
-  useEditNoteLoader({
-    noteId: note?.id,
-    editor,
-    setTitle,
-    setTimestamps,
-  });
-
-  const { onSave, saving } = useNoteSave(note?.id, saveNote);
-
+  } = useNote({note_id: note.note_id, editor});
 
   return (
     <div onClick={e => e.stopPropagation()}>
       <NoteTitleBar
         title={title}
         setTitle={setTitle}
-        onSave={onSave}
-        saving={saving}
+        onSave={saveNote}
         onDelete={deleteNote}
       />
 
-      <p>Last modified: {useLocalTime(updatedAt)}</p>
-      <p>Created: {useLocalTime(createdAt)}</p>
+      <p>Last modified: {useLocalTime(updated_at)}</p>
+      <p>Created: {useLocalTime(created_at)}</p>
 
       <NoteBodyEditor editor={editor} />
     </div>

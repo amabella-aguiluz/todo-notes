@@ -10,7 +10,7 @@ export const NoteRoutes = () => {
     <Routes>
     <Route index element={<NoteHome />} />          {/* default /notes */}
     <Route path="new" element={<EditNote />} />     {/* /notes/new */}
-    <Route path=":noteId" element={<EditNote />} /> {/* /notes/123 */}
+    <Route path=":note_id" element={<EditNote />} /> {/* /notes/123 */}
     </Routes>
   );
 };

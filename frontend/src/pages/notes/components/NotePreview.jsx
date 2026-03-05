@@ -6,7 +6,7 @@ import { useNotePreviewContent } from "../../../hooks/notes/useNotePreview";
 // TODO:
 // to be previewed in note selection screen
 // rotate when hovered over 
-export const NotePreview = ({ id, title, description, updatedAt, createdAt, onOpen }) => {
+export const NotePreview = ({ id, title, description, updated_at, created_at, onOpen }) => {
     // Get the first paragraph block (or fallback)
     const firstParagraph = useNotePreviewContent(description);
 
@@ -14,14 +14,10 @@ export const NotePreview = ({ id, title, description, updatedAt, createdAt, onOp
         <div onClick={onOpen}>
             <div>{/*  inner div with padding */}
                 <h3>{title}</h3>
-                <p>Last modified: {useLocalTime(updatedAt)}</p>
-                <p>Created: {useLocalTime(createdAt)}</p>
+                <p>Last modified: {useLocalTime(updated_at)}</p>
+                <p>Created: {useLocalTime(created_at)}</p>
                 {/* Show only first paragraph */}
-                {firstParagraph ? (
-                    <p>{firstParagraph.content}</p>
-                ) : (
-                    <p>No content</p>
-                )}
+                <p>{firstParagraph || "No content"}</p>
             </div>
         </div>
     );

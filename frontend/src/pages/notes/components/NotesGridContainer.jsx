@@ -1,26 +1,43 @@
 //notesgridcontainer.jsx 
-import React from "react";
-import NoteGridList from "./NoteGridList";
+import {React, useState} from "react";
 import EditNote from "../EditNote";
 import { useNoteList } from "../../../hooks/notes/useNotePreview";
-import { useOpenNote } from "../../../hooks/notes/openNote";
+import NotePreview from "./NotePreview";
+
 
 const NotesGridContainer = () => {
-  const { notes, loading } = useNoteList(); // now uses your new hook
-  const { openNote, open, close } = useOpenNote();
+  const { notes, loading } = useNoteList(); 
+  const [openNoteId, setOpenNoteId] = useState(null);
+
+  if (loading) return <p>Loading notes...</p>;
 
   return (
     <div>
-      <NoteGridList
-        notes={notes}
-        loading={loading}
-        onOpen={open} // pass the open function to each note
-      />
 
-      {openNote && (
-        <div onClick={close}>
+      {/* // displays map of notes  */}
+      <div style={{ display: "grid", gap: "1rem" }}>
+        {notes.length > 0 ? (
+          notes.map((note) => (
+            <NotePreview
+              key={note.note_id}
+              id={note.note_id}
+              title={note.title}
+              description={note.description}
+              updated_at={note.updated_at}
+              created_at={note.created_at}
+              onOpen={() => setOpenNoteId(note.note_id)}
+            />
+          ))
+        ) : (
+          <p>You don’t have any notes.</p>
+        )}
+      </div>
+
+      {/* if a note is opened */}
+      {openNoteId && (
+        <div onClick={() => setOpenNoteId(null)}>
           <div onClick={(e) => e.stopPropagation()}>
-            <EditNote note={openNote} />
+            <EditNote note={notes.find(n => n.note_id === openNoteId)} onClose={() => setOpenNoteId(null)} />
           </div>
         </div>
       )}

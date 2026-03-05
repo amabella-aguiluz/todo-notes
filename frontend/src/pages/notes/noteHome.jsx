@@ -5,7 +5,7 @@ import NotesGridContainer from "./components/NotesGridContainer";
 
 export const NoteHome = () => {
     return (
-        <div id="#noteHome">
+        <div id="noteHome">
             <TopBar />
             <ActionBar />
             <NotesGridContainer />
