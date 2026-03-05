@@ -1,6 +1,5 @@
 // src/hooks/noteEditHooks.js
 import { useState } from "react";
-import { authFetch } from "../auth/authFetch";
 
 export const useNoteEditor = (editor, noteId) => {
   // change title

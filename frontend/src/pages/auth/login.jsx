@@ -3,10 +3,11 @@
 import React, { useState } from "react";
 import LoginInput from "./components/login_input";
 import AuthPage from "./components/auth_page";
-import { useAuth } from "../../hooks/auth/authProvider.jsx"; // must match AuthProvider path
+import { useLogin } from "../../hooks/auth/useLogin";
+
 
 export const LoginPage = () => {
-  const { handleLogin } = useAuth(); // <- context must exist
+  const { handleLogin } = useLogin(); // <- context must exist
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");

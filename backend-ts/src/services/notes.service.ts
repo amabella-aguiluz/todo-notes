@@ -7,7 +7,7 @@ import { sort_fields, order, sortBy, orderBy } from "../types/sortBy.js";
 export const createNoteService = async (
   user_id: number,
   title: string,
-  description: Prisma.InputJsonValue) => {
+  description: string) => {
   return prisma.notes.create({
     data: { user_id, title, description },
   });
@@ -56,7 +56,7 @@ export const searchNotesService = async (
 // update notes
 export const updateNoteService = async (
   note_id: number,
-  data: Partial<{ title: string, description: Prisma.InputJsonValue }>) => {
+  data: Partial<{ title: string, description: string }>) => {
   return prisma.notes.update({
     where: { note_id },
     data: {...data, updated_at: new Date()} });

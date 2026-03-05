@@ -1,6 +1,5 @@
 //hooks/useNoteSave.js
 import { useState } from "react";
-import { authFetch } from "../auth/authFetch";
 
 export const useNoteSave = (noteId, saveNote) => {
   const [saving, setSaving] = useState(false);

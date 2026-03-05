@@ -1,6 +1,5 @@
 // src/hooks/notes/useNotesPreview.js
 import { useState, useEffect, useMemo } from "react";
-import { authFetch } from "../auth/authFetch";
 
 export const useNoteList = () => {
   const [notes, setNotes] = useState([]);

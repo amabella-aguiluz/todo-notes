@@ -1,6 +1,5 @@
 //hooks/EditNoteLoader.js
 import { useEffect } from "react";
-import { authFetch } from "../auth/authFetch";
 
 export const useEditNoteLoader = ({
   noteId,

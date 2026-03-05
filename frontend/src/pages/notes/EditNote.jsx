@@ -4,7 +4,7 @@ import "@blocknote/react/style.css";
 import NoteTitleBar from "./components/NoteTitleBar.jsx";
 import NoteBodyEditor from "./components/NotesBodyEditor.jsx";
 import { useNoteEditor } from "../../hooks/notes/noteEditHooks.js";
-import { useLocalTime } from "../../hooks/notes/localTime.js";
+import { useLocalTime } from "../../util/localTime.js";
 import { useEditNoteLoader } from "../../hooks/notes/editNoteLoader.js";
 import { useNoteSave } from "../../hooks/notes/useNoteSave.js";
 

@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import RegisterInput from "./components/register_input";
 import AuthPage from "./components/auth_page";
-import { useAuth } from "../../hooks/auth/authProvider";
+import { useRegister } from "../../hooks/auth/useRegister";
 
 export const RegisterPage = () => {
-  const { handleRegister } = useAuth();;
+  const { handleRegister, error, loading } = useRegister();;
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
-  const [error, setError] = useState("");
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -33,6 +32,7 @@ export const RegisterPage = () => {
           setPasswordConfirm={setPasswordConfirm}
           onSubmit={onSubmit}
           error={error}
+          loading={loading}
         />
       }
     />

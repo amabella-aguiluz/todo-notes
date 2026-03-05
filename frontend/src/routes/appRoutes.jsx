@@ -2,7 +2,7 @@
 import { Routes, Route, Navigate, BrowserRouter } from "react-router-dom";
 import UserRoutes from "./userRoutes";
 import NoteRoutes from "./noteRoutes";
-import ProtectedRoute from "./protectedRoutes";
+// import ProtectedRoute from "./protectedRoutes";
 
 const AppRoutes = () => {
   return (
@@ -14,7 +14,7 @@ const AppRoutes = () => {
       {/* Public routes */}
       <Route path="/*" element={<UserRoutes />} />
       {/* Notes routes */}
-      <Route path="/notes/*" element={<ProtectedRoute><NoteRoutes /></ProtectedRoute>} />
+      <Route path="/notes/*" element={<NoteRoutes />} />
 
 
     </Routes>
